@@ -105,3 +105,46 @@ export const footer_data = [
     links: ["Instagram", "Twitter", "Facebook", "Youtube"],
   },
 ];
+
+export const comments_data = [
+  {
+    _id: "1",
+    blog: blog_data[0],
+    name: "Mictchell Scoorr",
+    content: "This is my new Comment",
+    isApproved: false,
+    createdAt: "2025-04-21T07:06:37.5082",
+    updatedAt: "2025-04-21T07:06:37.5082",
+    __v: 0,
+  },
+  {
+    _id: "2",
+    blog: blog_data[1],
+    name: "Mictchell Scoorr",
+    content: "This is my new Comment",
+    isApproved: true,
+    createdAt: "2025-04-21T07:06:37.5082",
+    updatedAt: "2025-04-21T07:06:37.5082",
+    __v: 0,
+  },
+  {
+    _id: "3",
+    blog: blog_data[2],
+    name: "Mictchell Scoorr",
+    content: "This is my new Comment",
+    isApproved: true,
+    createdAt: "2025-04-21T07:06:37.5082",
+    updatedAt: "2025-04-21T07:06:37.5082",
+    __v: 0,
+  },
+  {
+    _id: "4",
+    blog: blog_data[3],
+    name: "Mictchell Scoorr",
+    content: "This is my new Comment",
+    isApproved: true,
+    createdAt: "2025-04-21T07:06:37.5082",
+    updatedAt: "2025-04-21T07:06:37.5082",
+    __v: 0,
+  },
+];
