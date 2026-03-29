@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "../../components/admin/Sidebar";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ const Layout = () => {
         </button>
       </div>
 
-      <div className="flex h-[calc(100vh-70px)] bg-red-300">
-        <div>Sidebar</div>
+      <div className="flex h-[calc(100vh-70px)]">
+        <Sidebar />
         <Outlet />
       </div>
     </>
