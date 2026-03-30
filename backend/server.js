@@ -3,6 +3,8 @@ import "dotenv/config";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import adminRouter from "./routes/adminRoutes.js";
+import blogRouter from "./routes/blogRoutes.js";
+import commentRouter from "./routes/commentRoutes.js";
 
 const server = express();
 
@@ -11,11 +13,10 @@ server.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-server.get("/", (req, res) => {
-  res.send("workind");
-});
-
 server.use("/api/admin", adminRouter);
+server.use("/api/blog", blogRouter);
+server.use("/api/comment", commentRouter);
+server.use("/uploads", express.static("uploads"));
 
 connectDB().then(() => {
   server.listen(PORT, () => {
