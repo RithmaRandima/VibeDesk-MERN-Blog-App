@@ -7,9 +7,14 @@ import Moment from "moment";
 import { FaFacebook } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
+import { useAppContext } from "../../context/AppContext";
+import { toast } from "react-toastify";
 
 const Blog = () => {
+  const { axios } = useAppContext();
+
   const { id } = useParams();
+
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
 
@@ -17,16 +22,54 @@ const Blog = () => {
   const [content, setContent] = useState("");
 
   const fetchBlogData = async () => {
-    const blogData = blog_data.find((item) => item._id === Number(id));
-    setData(blogData);
+    try {
+      const { data } = await axios.get(`/api/blog/all/${id}`);
+      data.success ? setData(data.blog) : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on fetch Blog Data", error);
+    }
   };
 
   const fetchComments = async () => {
-    setComments(comments_data);
+    try {
+      const { data } = await axios.post("/api/comment/comments", {
+        blogId: id,
+      });
+
+      if (data.success) {
+        setComments(data.comments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on fetch Blog Comments", error);
+    }
   };
+
+  console.log(comments);
 
   const addComment = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post("/api/comment/add-comment", {
+        blog: id,
+        name,
+        content,
+      });
+
+      if (data.success) {
+        toast.success(data.message);
+        setName("");
+        setContent("");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on Add Comment function", error);
+    }
   };
 
   useEffect(() => {
@@ -55,7 +98,7 @@ const Blog = () => {
       {/* indo section */}
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <img
-          src={data.image}
+          src={`http://localhost:3000/uploads/${data.image}`}
           alt=""
           className="rounded-3xl mb-5 w-full h-140 object-cover"
         />

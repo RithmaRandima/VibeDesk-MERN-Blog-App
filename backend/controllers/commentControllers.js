@@ -1,3 +1,5 @@
+import Comment from "../models/CommentModel.js";
+
 // getBlogComment Function
 export const addComment = async (req, res) => {
   try {

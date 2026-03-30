@@ -8,14 +8,16 @@ import AddBlog from "./pages/admin/AddBlog";
 import Comments from "./pages/admin/Comments";
 import ListBlog from "./pages/admin/ListBlog";
 import Login from "./components/admin/Login";
+import { useAppContext } from "../context/AppContext";
 
 const App = () => {
+  const { token } = useAppContext();
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<Blog />} />
-        <Route path="/admin" element={true ? <Layout /> : <Login />}>
+        <Route path="/admin" element={token ? <Layout /> : <Login />}>
           <Route index element={<Dashboard />} />
           <Route path="addBlog" element={<AddBlog />} />
           <Route path="listBlog" element={<ListBlog />} />

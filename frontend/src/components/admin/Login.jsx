@@ -1,15 +1,34 @@
 import React, { useState } from "react";
+import { useAppContext } from "../../../context/AppContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const { axios, setToken } = useAppContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      email,
-      password,
-    });
+    try {
+      const { data } = await axios.post("/api/admin/login", {
+        email,
+        password,
+      });
+
+      if (data.success) {
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+        toast.success("Login successful");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on admin Login data", error);
+    }
   };
   return (
     <div className="flex items-center justify-center h-screen">

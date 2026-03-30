@@ -7,6 +7,6 @@ import {
 const commentRouter = express.Router();
 
 commentRouter.post("/add-comment", addComment);
-commentRouter.get("/comments", getBlogComment);
+commentRouter.post("/comments", getBlogComment);
 
 export default commentRouter;
