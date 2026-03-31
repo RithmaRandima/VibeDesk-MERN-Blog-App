@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaBlog, FaComment, FaPen } from "react-icons/fa";
 import BlogTableItem from "../../components/admin/BlogTableItem";
 import { dashboard_data } from "../../assets/assets";
+import { useAppContext } from "../../../context/AppContext";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
+  const { axios } = useAppContext();
   const [dashboardData, setDashboardData] = useState({
     blogs: 0,
     comments: 0,
@@ -12,7 +15,15 @@ const Dashboard = () => {
   });
 
   const fetchDashboard = async () => {
-    setDashboardData(dashboard_data);
+    try {
+      const { data } = await axios.get("/api/admin/dashboard");
+      data.success
+        ? setDashboardData(data.dashboardData)
+        : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on detchDashboard function on Dashboard page", error);
+    }
   };
 
   useEffect(() => {

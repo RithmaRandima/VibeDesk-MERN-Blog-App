@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { blog_data } from "../../assets/assets";
 import BlogTableItem from "../../components/admin/BlogTableItem";
 import { FaBlog } from "react-icons/fa";
+import { useAppContext } from "../../../context/AppContext";
+import { toast } from "react-toastify";
 
 const ListBlog = () => {
   const [blogs, setBlogs] = useState([]);
+  const { axios } = useAppContext();
 
   const fetchBlogs = async () => {
-    setBlogs(blog_data);
+    try {
+      const { data } = await axios.get("/api/admin/blogs");
+      if (data.success) {
+        setBlogs(data.blogs);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log("error on fetch blogs function in admin", error);
+    }
   };
 
   useEffect(() => {

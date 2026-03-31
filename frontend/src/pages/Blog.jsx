@@ -100,7 +100,7 @@ const Blog = () => {
         <img
           src={`http://localhost:3000/uploads/${data.image}`}
           alt=""
-          className="rounded-3xl mb-5 w-full h-140 object-cover"
+          className="rounded-3xl mb-5 w-full h-140 object-cover object-top"
         />
 
         <div

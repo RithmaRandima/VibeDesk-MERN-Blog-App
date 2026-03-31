@@ -1,6 +1,7 @@
 import Blog from "../models/BlogModel.js";
 import fs from "fs/promises";
 import path from "path";
+import Comment from "../models/CommentModel.js";
 
 // addBlog Function
 export const addBlog = async (req, res) => {

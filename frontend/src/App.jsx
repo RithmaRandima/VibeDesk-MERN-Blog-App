@@ -9,6 +9,7 @@ import Comments from "./pages/admin/Comments";
 import ListBlog from "./pages/admin/ListBlog";
 import Login from "./components/admin/Login";
 import { useAppContext } from "../context/AppContext";
+import "quill/dist/quill.snow.css";
 
 const App = () => {
   const { token } = useAppContext();
