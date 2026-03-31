@@ -2,6 +2,7 @@ import Blog from "../models/BlogModel.js";
 import fs from "fs/promises";
 import path from "path";
 import Comment from "../models/CommentModel.js";
+import main from "../config/grmini.js";
 
 // addBlog Function
 export const addBlog = async (req, res) => {
@@ -113,6 +114,21 @@ export const togglePublish = async (req, res) => {
     res.json({ success: true, message: "Blog status updated" });
   } catch (error) {
     console.log("Error on toggleFunction function:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// generateContent Function
+
+export const genarateContent = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const content = await main(
+      prompt + "Generated a blog content for this topic in simple text format",
+    );
+    res.json({ success: true, content });
+  } catch (error) {
+    console.log("Error on genarateContent function:", error);
     res.json({ success: false, message: error.message });
   }
 };

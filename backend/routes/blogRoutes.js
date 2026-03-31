@@ -2,6 +2,7 @@ import express from "express";
 import {
   addBlog,
   deleteBlog,
+  genarateContent,
   getAllBlogs,
   getBlogById,
   togglePublish,
@@ -16,5 +17,6 @@ blogRouter.get("/all", getAllBlogs);
 blogRouter.get("/all/:id", getBlogById);
 blogRouter.post("/delete", auth, deleteBlog);
 blogRouter.post("/toggle-publish", auth, togglePublish);
+blogRouter.post("/generate", auth, genarateContent);
 
 export default blogRouter;
