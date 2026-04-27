@@ -3,18 +3,29 @@ import { useAppContext } from "../../context/AppContext";
 
 const Navbar = () => {
   const { navigate, token } = useAppContext();
+
   return (
-    <div className="flex justify-between items-center py-5 mx-8 sm:mx-20 xl:mx-32 cursor-pointer">
-      {/* logo */}
-      <div onClick={() => navigate("/")}>
-        <h1>Blog Logo</h1>
+    <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <div className="flex justify-between items-center py-4 px-6 md:px-10 lg:px-16">
+        {/* Logo */}
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+            B
+          </div>
+          <h1 className="text-lg font-semibold text-gray-800">BlogSphere</h1>
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={() => navigate("/admin")}
+          className="px-6 py-2.5 rounded-full text-sm font-medium text-white bg-primary hover:bg-primary/90 transition shadow-sm hover:shadow-md"
+        >
+          {token ? "Dashboard" : "Login"}
+        </button>
       </div>
-      <button
-        onClick={() => navigate("/admin")}
-        className="flex items-center gap-2 rounded-full text-sm cursor-pointer bg-primary text-white px-10 py-2.5"
-      >
-        {token ? "Dashboard" : "Login"}
-      </button>
     </div>
   );
 };

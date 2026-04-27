@@ -6,87 +6,117 @@ import { toast } from "react-toastify";
 
 const Comments = () => {
   const { axios } = useAppContext();
+
   const [comments, setComments] = useState([]);
   const [filter, setFilter] = useState("Not Approved");
+  const [loading, setLoading] = useState(true);
 
   const fetchComments = async () => {
     try {
+      setLoading(true);
+
       const { data } = await axios.get("/api/admin/comments");
-      // console.log(data);
-      data.success ? setComments(data.comments) : toast.error(data.message);
+
+      if (data.success) {
+        setComments(data.comments);
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-      toast.error(error.message);
-      console.log("error on fetchComments function on Comments page", error);
+      toast.error("Failed to load comments");
+      console.log("fetching comment error", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  console.log(comments);
-
   useEffect(() => {
     fetchComments();
-  });
+  }, []);
+
+  const filteredComments = comments.filter((comment) =>
+    filter === "Approved"
+      ? comment.isApproved === true
+      : comment.isApproved === false,
+  );
+
   return (
-    <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16 bg-blue-50/50">
-      {/* top section */}
-      <div className="flex justify-between items-center  max-w-3xl">
-        {/* heading */}
-        <div className="flex items-center gap-3 m-4 mt-6 text-gray-600">
-          {/* icon blogs */}
-          <FaComment />
-          <p>All Blogs</p>
+    <div className="flex-1 bg-gray-50 p-4 md:p-10 ">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6 max-w-4xl">
+        {/* Title */}
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-primary/10 text-primary rounded-lg">
+            <FaComment />
+          </div>
+          <h1 className="text-xl font-semibold text-gray-800">Comments</h1>
         </div>
-        <div className="flex gap-4">
+
+        {/* Filters */}
+        <div className="flex gap-2">
           <button
             onClick={() => setFilter("Approved")}
-            className={`shadow border rounded-full px-4 py-1 cursor-pointer tezt-xs ${filter === "Approved" ? "text-primary" : "text-gray-700"}`}
+            className={`px-4 py-1 rounded-full text-xs border transition ${
+              filter === "Approved"
+                ? "bg-primary text-white border-primary"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
           >
             Approved
           </button>
 
           <button
             onClick={() => setFilter("Not Approved")}
-            className={`shadow border rounded-full px-4 py-1 cursor-pointer tezt-xs ${filter === "Not Approved" ? "text-primary" : "text-gray-700"}`}
+            className={`px-4 py-1 rounded-full text-xs border transition ${
+              filter === "Not Approved"
+                ? "bg-primary text-white border-primary"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
           >
-            Not Approved
+            Pending
           </button>
         </div>
       </div>
 
-      {/* content */}
-      <div className="relative h-4/5 max-w-3xl overflow-x-auto mt-7 bg-white shadow rounded-lg scrollbar-hide">
-        <table className="w-full text-sm text-gray-500">
-          <thead className="text-xs text-gray-700 text-left uppercase">
-            <tr>
-              <th scope="col" className="py-3 px-6">
-                Blog Title & Comment
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Date
-              </th>{" "}
-              <th scope="col" className="py-3 px-6">
-                Action
-              </th>
-            </tr>
-          </thead>
+      {/* Table Card */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 max-w-4xl h-[70vh] overflow-y-auto">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-gray-600">
+            <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
+              <tr>
+                <th className="py-4 px-6 text-left">Blog & Comment</th>
+                <th className="py-4 px-6 text-left">Date</th>
+                <th className="py-4 px-6 text-left">Action</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {comments
-              .filter((comment) => {
-                if (filter === "Approved") {
-                  return comment.isApproved === true;
-                }
-                return comment.isApproved === false;
-              })
-              .map((comment, index) => (
-                <CommentTableItem
-                  key={comment._id}
-                  comment={comment}
-                  index={index + 1}
-                  fetchComment={fetchComments}
-                />
-              ))}
-          </tbody>
-        </table>
+            <tbody>
+              {!loading &&
+                filteredComments.map((comment, index) => (
+                  <CommentTableItem
+                    key={comment._id}
+                    comment={comment}
+                    index={index + 1}
+                    fetchComment={fetchComments}
+                  />
+                ))}
+            </tbody>
+          </table>
+
+          {/* Loading */}
+          {loading && (
+            <div className="p-10 text-center text-gray-500">
+              Loading comments...
+            </div>
+          )}
+
+          {/* Empty */}
+          {!loading && filteredComments.length === 0 && (
+            <div className="p-10 text-center text-gray-500">
+              No comments found
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FaStar } from "react-icons/fa";
-import bg_img from "../assets/aa.jpeg";
+import bg_img from "../assets/background.jpg";
 import { useAppContext } from "../../context/AppContext";
 const Header = () => {
   const { setInput, input } = useAppContext();
@@ -42,6 +42,10 @@ const Header = () => {
         <input
           ref={inputRef}
           type="text"
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+          value={input}
           placeholder="Search for blogs"
           className="w-full pl-4 outline-none"
         />
@@ -61,11 +65,6 @@ const Header = () => {
           </button>
         )}
       </form>
-      <img
-        src={bg_img}
-        alt=""
-        className="absolute -top-50 -z-1 opacity-50 left-0 right-0 bg-red-200 object-cover"
-      />
     </div>
   );
 };

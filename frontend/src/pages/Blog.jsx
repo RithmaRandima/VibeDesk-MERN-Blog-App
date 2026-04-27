@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import { blog_data, comments_data } from "../assets/assets";
-import bg_img from "../assets/aa.jpeg";
+import bg_img from "../assets/background.jpg";
 import Moment from "moment";
 import { FaFacebook } from "react-icons/fa";
 import Footer from "../components/Footer";
@@ -47,8 +47,6 @@ const Blog = () => {
       console.log("error on fetch Blog Comments", error);
     }
   };
-
-  console.log(comments);
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -95,7 +93,7 @@ const Blog = () => {
         </p>
       </div>
 
-      {/* indo section */}
+      {/* info section */}
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <img
           src={`http://localhost:3000/uploads/${data.image}`}

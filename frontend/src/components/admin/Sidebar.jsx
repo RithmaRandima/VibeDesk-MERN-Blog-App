@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col border-r border-gray-200 min-h-ful pt-6">
+    <div className="flex flex-col border-r border-gray-200 h-[85vh] border-b pt-6">
       {/* Go to Dashboard */}
       <NavLink
         end
@@ -16,7 +16,6 @@ const Sidebar = () => {
         <FaHome />
         <p className="hidden md:inline-block">Dashboard</p>
       </NavLink>
-
       {/* Add Blog */}
       <NavLink
         to="/admin/addBlog"
@@ -27,7 +26,6 @@ const Sidebar = () => {
         <FaPlus />
         <p className="hidden md:inline-block">Add Blog</p>
       </NavLink>
-
       {/* List Blog */}
       <NavLink
         to="/admin/listBlog"
@@ -39,7 +37,7 @@ const Sidebar = () => {
         <p className="hidden md:inline-block">Blog List</p>
       </NavLink>
 
-      {/* List Blog */}
+      {/* List comments */}
       <NavLink
         to="/admin/comments"
         className={({ isActive }) =>
