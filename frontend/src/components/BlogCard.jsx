@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRegCalendarAlt, FaHeart } from "react-icons/fa";
+import {
+  FaRegCalendarAlt,
+  FaHeart,
+  FaRegComment,
+  FaRegCommentAlt,
+  FaComment,
+} from "react-icons/fa";
 import axios from "axios";
 
 const BlogCard = ({ blog }) => {
@@ -8,6 +14,11 @@ const BlogCard = ({ blog }) => {
 
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
+
+  const formatCount = (num) => {
+    if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+    return num;
+  };
 
   const fetchComments = async () => {
     try {
@@ -32,25 +43,32 @@ const BlogCard = ({ blog }) => {
   console.log(comments.length);
 
   return (
-    <div className="max-w-md mx-auto bg-red-400 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-2 cursor-pointer">
+    <div className="relative max-w-md mx-auto bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-2">
       {/* Title */}
       <div className=" pt-1">
-        <h2 className="text-xl font-semibold text-gray-800 leading-snug">
+        <h2 className="text-xl capitalize font-semibold text-gray-800 leading-snug">
           {title}
         </h2>
 
         <p>{category}</p>
 
-        {/* Meta info */}
-        <div className="flex items-center gap-4 text-sm text-gray-500 mt-3">
+        {/* date info */}
+        <div className="flex items-center gap-1 text-[11px] mt-2 text-gray-500">
+          <FaRegCalendarAlt />
+          <span>{new Date(createdAt).toLocaleDateString()}</span>
+        </div>
+
+        {/* like and comment count */}
+        <div className="flex items-center gap-3 text-sm text-gray-500 mt-3">
           <div className="flex items-center gap-1">
-            <FaRegCalendarAlt />
-            <span>{new Date(createdAt).toLocaleDateString()}</span>
+            <FaHeart />
+            <span>{comments.length + "k"}</span>
           </div>
 
           <div className="flex items-center gap-1">
-            <FaHeart />
-            <span>{comments.length || "1k"}</span>
+            <FaComment />
+
+            <span>{formatCount(comments.length)} comments</span>
           </div>
         </div>
 
@@ -63,7 +81,7 @@ const BlogCard = ({ blog }) => {
         />
 
         {/* CTA */}
-        <div className="mt-5">
+        <div className="absolute bg-white p-1 pt-3 z-3 rounded-br-xl">
           <button
             onClick={(e) => {
               e.stopPropagation();

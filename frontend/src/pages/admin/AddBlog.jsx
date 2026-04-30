@@ -44,7 +44,7 @@ const AddBlog = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("AI generation failed");
+      toast.error("AI generation failed", error);
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +72,7 @@ const AddBlog = () => {
         setImage(null);
         setTitle("");
         setSubTitle("");
-        setCategory("Startup");
+        setCategory("All");
         setIsPublished(false);
 
         if (quillRef.current) {
@@ -82,7 +82,7 @@ const AddBlog = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong", error);
     } finally {
       setIsAdding(false);
     }
@@ -91,26 +91,26 @@ const AddBlog = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex-1 bg-gray-50 min-h-screen p-6 md:p-10"
+      className="flex-1 p-4 md:p-10 min-h-screen overflow-y-auto"
     >
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10 h-[80vh] overflow-y-auto">
+      <div className="max-full mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-10">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-800">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
             Create New Blog
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-xs sm:text-sm text-gray-500">
             Write, generate, and publish your content
           </p>
         </div>
 
-        {/* Upload */}
+        {/* Thumbnail */}
         <div>
           <p className="text-sm font-medium text-gray-600 mb-2">Thumbnail</p>
 
           <label
             htmlFor="image"
-            className="flex flex-col items-center justify-center w-40 h-28 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary transition overflow-hidden"
+            className="flex flex-col items-center justify-center w-full sm:w-40 h-28 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary transition overflow-hidden"
           >
             {image ? (
               <img
@@ -136,7 +136,7 @@ const AddBlog = () => {
         </div>
 
         {/* Title */}
-        <div className="mt-6">
+        <div className="mt-5 sm:mt-6">
           <label className="text-sm font-medium text-gray-600">Title</label>
           <input
             value={title}
@@ -147,7 +147,7 @@ const AddBlog = () => {
         </div>
 
         {/* Subtitle */}
-        <div className="mt-5">
+        <div className="mt-4 sm:mt-5">
           <label className="text-sm font-medium text-gray-600">Subtitle</label>
           <input
             value={subTitle}
@@ -158,12 +158,12 @@ const AddBlog = () => {
         </div>
 
         {/* Editor */}
-        <div className="mt-6 relative">
+        <div className="mt-5 sm:mt-6 relative">
           <label className="text-sm font-medium text-gray-600">Content</label>
 
           <div
             ref={editorRef}
-            className="mt-2 border border-gray-200 rounded-xl min-h-[200px]"
+            className="mt-2 border border-gray-200 rounded-xl min-h-[180px] sm:min-h-[220px]"
           />
 
           {/* AI Button */}
@@ -171,20 +171,20 @@ const AddBlog = () => {
             type="button"
             disabled={isLoading}
             onClick={generateContent}
-            className="absolute top-8 right-3 text-xs bg-black text-white px-3 py-1 rounded-full hover:bg-black/80 transition"
+            className="absolute top-2 sm:top-8 right-2 sm:right-3 text-[10px] sm:text-xs bg-black text-white px-2 sm:px-3 py-1 rounded-full hover:bg-black/80 transition"
           >
             {isLoading ? "Generating..." : "AI Generate"}
           </button>
 
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-white/60 rounded-xl">
-              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
         </div>
 
         {/* Category */}
-        <div className="mt-6">
+        <div className="mt-5 sm:mt-6">
           <label className="text-sm font-medium text-gray-600">Category</label>
 
           <select
@@ -193,7 +193,7 @@ const AddBlog = () => {
             className="w-full mt-2 px-4 py-3 border border-gray-200 rounded-xl outline-none"
           >
             {blogCategories.map((item, i) => (
-              <option key={i} value={item}>
+              <option key={i} value={item === "All" ? "" : item}>
                 {item}
               </option>
             ))}
@@ -201,7 +201,7 @@ const AddBlog = () => {
         </div>
 
         {/* Publish */}
-        <div className="flex items-center gap-2 mt-6">
+        <div className="flex items-center gap-2 mt-5 sm:mt-6">
           <input
             type="checkbox"
             checked={isPublished}
@@ -213,7 +213,7 @@ const AddBlog = () => {
         {/* Submit */}
         <button
           disabled={isAdding}
-          className="mt-8 w-full md:w-48 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition disabled:opacity-60"
+          className="mt-6 sm:mt-8 w-full sm:w-48 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition disabled:opacity-60"
         >
           {isAdding ? "Publishing..." : "Publish Blog"}
         </button>

@@ -21,7 +21,7 @@ const Layout = () => {
             className="flex items-center gap-2 cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-              A
+              B
             </div>
             <h1 className="text-lg font-semibold text-gray-800">Admin Panel</h1>
           </div>

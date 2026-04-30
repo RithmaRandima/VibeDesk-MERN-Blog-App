@@ -4,7 +4,7 @@ import { useAppContext } from "../../../context/AppContext";
 import { toast } from "react-toastify";
 
 const BlogTableItem = ({ blog, fetchBlogs, index }) => {
-  const { title, createdAt } = blog;
+  const { title, category, createdAt } = blog;
   const BlogDate = new Date(createdAt);
 
   const { axios } = useAppContext();
@@ -46,8 +46,9 @@ const BlogTableItem = ({ blog, fetchBlogs, index }) => {
   };
   return (
     <tr className="border-y border-gray-300">
-      <th className="px-2 py-4">{index}</th>
+      <th className="pl-5 py-4 text-left">{index}</th>
       <td className="px-2 py-4">{title}</td>
+      <td className="px-2 py-4">{category}</td>
       <td className="px-2 py-4 max-sm:hidden">{BlogDate.toDateString()}</td>
       <td className="px-2 py-4 max-sm:hidden">
         <p

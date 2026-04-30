@@ -49,7 +49,7 @@ const CommentTableItem = ({ comment, fetchComment }) => {
   };
 
   return (
-    <tr className="order-y border-gray-300">
+    <tr className="border-y border-gray-200">
       <td className="px-6 py-4">
         <b className="font-medium text-gray-600">Blog</b> : {blog?.title}
         <br />

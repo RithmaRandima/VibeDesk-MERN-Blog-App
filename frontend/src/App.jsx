@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
@@ -10,9 +10,22 @@ import ListBlog from "./pages/admin/ListBlog";
 import Login from "./components/admin/Login";
 import { useAppContext } from "../context/AppContext";
 import "quill/dist/quill.snow.css";
+import Splash from "./components/Splash";
 
 const App = () => {
   const { token } = useAppContext();
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showSplash) return <Splash />;
+
   return (
     <div>
       <Routes>
